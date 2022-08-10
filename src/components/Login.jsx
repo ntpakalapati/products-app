@@ -16,8 +16,12 @@ function Login() {
     console.log(url)
     await axios.get(url)
       .then(async (response) => {
-        localStorage.setItem("token", response.data)
-        navigate('/')
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token)
+          navigate('/')
+        } else {
+          alert(response.data.message)
+        }
       }).catch((error) => {
         const errorMessage = error.message;
         console.log(errorMessage)

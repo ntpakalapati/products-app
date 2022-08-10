@@ -33,7 +33,7 @@ export default function Dashboard() {
     setEmail(emailId)
     await axios.get("http://localhost:8000/products")
       .then(async (response) => {
-        console.log(response.data.rows)
+        console.log(response)
         setProducts(response.data.rows)
       }).catch((error) => {
         const errorMessage = error.message;
@@ -48,6 +48,7 @@ export default function Dashboard() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     formData['id'] = products.length + 1;
+    formData['image'] = file;
     console.log(formData)
     await axios.post('http://localhost:8000/addproduct', formData, {
       body: JSON.stringify(formData)
@@ -80,7 +81,11 @@ export default function Dashboard() {
     setOpens(null);
   };
 
-
+  const [file, setFile] = useState();
+  function handleChangeImg(e) {
+      console.log(e.target.files);
+      setFile(URL.createObjectURL(e.target.files[0]));
+  }
 
   const logout = () => {
     localStorage.clear();
@@ -151,7 +156,7 @@ export default function Dashboard() {
               <Grid key={product.id} item xs={12} sm={6} md={3}>
                 <Card>
                   <Box sx={{ pt: '50%', position: 'relative' }}>
-                    <ProductImgStyle alt={product?.name} src={null} />
+                    <ProductImgStyle alt={product?.name} src={product?.image} />
                   </Box>
 
                   <Stack spacing={2} sx={{ p: 3 }}>
@@ -245,6 +250,25 @@ export default function Dashboard() {
                   name="status"
                   autoFocus
                   onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                {/* <input
+                  style={{ display: 'none' }}
+                  id="image"
+                  name="image"
+                  type="file"
+                  onChange={handleChange}
+                /> */}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  label="Product Image"
+                  name="image"
+                  type="file"
+                  id="image"
+                  onChange={handleChangeImg}
                 />
               </Grid>
 
