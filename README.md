@@ -1,9 +1,13 @@
 # products-app
 
-REGISTER NEW USER
+REGISTER NEW USER 
+
 LOGIN 
+
 ADD PRODUCT 
+
 PRODUCT LIST VIEW 
+
 LOGOUT 
 
 # Install
